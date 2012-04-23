@@ -10,7 +10,7 @@ include $(CLEAR_VARS)
 
 # List all of our C files to be compiled (header file
 # dependencies are automatically computed)
-LOCAL_SRC_FILES := com_intel_android_fib_FibLib.c
+LOCAL_SRC_FILES := fib.c
 
 # The name of our shared module (this name will be prepended
 # by lib and postfixed by .so)
