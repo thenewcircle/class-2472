@@ -1,4 +1,4 @@
-package com.intel.android.hello;
+package com.intel.android.fib;
 
 public class FibLib {
 
