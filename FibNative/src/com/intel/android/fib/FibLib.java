@@ -12,6 +12,10 @@ public class FibLib {
 		return fibJ(n-1)+fibJ(n-2);
 	}
 	
+	static {
+		System.loadLibrary("fib");
+	}
+	
 	/** Declaration of native Fibonacci function. */
 	public static native long fibN(long n);
 }
