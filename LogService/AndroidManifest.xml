@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.intel.android.logservice"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="15" />
+
+    <application>
+        <service android:name=".LogService" >
+            <intent-filter>
+                <action android:name="com.intel.android.logcommon.ILogService" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>
