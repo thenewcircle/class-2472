@@ -2,6 +2,7 @@ package com.intel.android.loglib;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 
 public class LogLibActivity extends Activity {
     /** Called when the activity is first created. */
@@ -9,5 +10,11 @@ public class LogLibActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
+        
+        LogLib.log(LogLib.DEBUG, "LogLib", "onCreated");
+    }
+    
+    public void onClick(View v) {
+        LogLib.log(LogLib.DEBUG, "LogLib", "onCreated");
     }
 }
