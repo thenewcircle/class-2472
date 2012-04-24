@@ -1,6 +1,10 @@
 #include "com_intel_android_loglib_LogLib.h"
 #include <android/log.h>
 
+jint JNI_OnLoad(JavaVM* vm, void* reserved) {
+	return JNI_VERSION_1_4;
+}
+
 JNIEXPORT void JNICALL Java_com_intel_android_loglib_LogLib_log
 (JNIEnv *env, jclass clazz, jint priority, jstring tag_str, jstring message_str) {
 
