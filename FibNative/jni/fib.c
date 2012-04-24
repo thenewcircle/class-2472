@@ -10,3 +10,16 @@ JNIEXPORT jlong JNICALL Java_com_intel_android_fib_FibLib_fibN
   (JNIEnv *env, jclass clazz, jlong n) {
 	return fib(n);
 }
+
+JNIEXPORT jlong JNICALL Java_com_intel_android_fib_FibLib_fibNI
+  (JNIEnv *env, jclass clazz, jlong n) {
+    jlong previous = -1;
+    jlong result = 1;
+    jlong i = 0;
+    for (; i <= n; i++) {
+    	jlong sum = result + previous;
+        previous = result;
+        result = sum;
+    }
+    return result;
+}

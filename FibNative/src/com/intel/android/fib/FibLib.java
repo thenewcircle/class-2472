@@ -12,10 +12,26 @@ public class FibLib {
 		return fibJ(n-1)+fibJ(n-2);
 	}
 	
+	/** Java iterative version of Fibonacci. */
+    public static long fibJI(long n) {
+        long previous = -1;
+        long result = 1;
+        for (long i = 0; i <= n; i++) {
+            long sum = result + previous;
+            previous = result;
+            result = sum;
+        }
+        return result;
+    }
+
+	
 	static {
 		System.loadLibrary("fib");
 	}
 	
 	/** Declaration of native Fibonacci function. */
 	public static native long fibN(long n);
+	
+	/** Native interative version of Fibonacci. */
+	public static native long fibNI(long n);
 }
