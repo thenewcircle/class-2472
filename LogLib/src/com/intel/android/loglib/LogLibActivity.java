@@ -11,10 +11,10 @@ public class LogLibActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        LogLib.log(LogLib.DEBUG, "LogLib", "onCreated");
+        LogLib.log(3, "LogLib", "onCreated");
     }
     
     public void onClick(View v) {
-        LogLib.log(LogLib.DEBUG, "LogLib", "onCreated");
+        LogLib.log(3, "LogLib", "onCreated");
     }
 }

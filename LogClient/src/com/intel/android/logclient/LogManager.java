@@ -1,13 +1,12 @@
 package com.intel.android.logclient;
 
-import com.intel.android.logcommon.ILogService;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.os.RemoteException;
+import com.intel.android.logcommon.*;
 
 public class LogManager {
 	private ILogService logService;
@@ -34,6 +33,14 @@ public class LogManager {
 	public void log(int priority, String tag, String message) {
 		try {
 			logService.log(priority, tag, message);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void logMessage(Message message) {
+		try {
+			logService.logMessage(message);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

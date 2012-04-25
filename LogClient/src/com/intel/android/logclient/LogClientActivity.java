@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.intel.android.loglib.LogLib;
+import com.intel.android.logcommon.Message;
 
 public class LogClientActivity extends Activity {
 	LogManager logManager;
@@ -14,11 +14,13 @@ public class LogClientActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
+
 		logManager = new LogManager(this);
 	}
 
 	public void onClick(View v) {
-		logManager.log(LogLib.DEBUG, "LogLib", "onCreated");
+		// logManager.log(Message.DEBUG, "LogLib", "onCreated");
+		logManager
+				.logMessage(new Message(Message.DEBUG, "LogLib", "onCreated"));
 	}
 }
