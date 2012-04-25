@@ -2,6 +2,7 @@ package com.intel.android.fibcommon;
 
 import com.intel.android.fibcommon.Request;
 import com.intel.android.fibcommon.Response;
+import com.intel.android.fibcommon.IFibListener;
 
 interface IFibService {
 	long fibJ(long n);
@@ -10,4 +11,6 @@ interface IFibService {
 	long fibNI(long n);
 	
 	Response fib(in Request r);
+	
+	oneway void asyncFib(in Request r, in IFibListener listener);
 }

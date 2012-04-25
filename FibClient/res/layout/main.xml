@@ -15,16 +15,41 @@
     </EditText>
 
     <Button
-        android:onClick="onClick"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button" />
+        android:onClick="onClick"
+        android:text="Run All on UI Thread" />
 
-    <TextView
-        android:id="@+id/output"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Output:"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:layout_height="wrap_content"
+        android:gravity="center" >
+
+        <Button
+            android:id="@+id/button_java"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickAsync"
+            android:text="JavaR Async" />
+
+        <Button
+            android:id="@+id/button_native"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onClickAsync"
+            android:text="NativeR Async" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <TextView
+            android:id="@+id/output"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Output:"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </ScrollView>
 
 </LinearLayout>

@@ -1,6 +1,8 @@
 package com.intel.android.fibservice;
 
 import android.os.RemoteException;
+
+import com.intel.android.fibcommon.IFibListener;
 import com.intel.android.fibcommon.IFibService;
 import com.intel.android.fibcommon.Request;
 import com.intel.android.fibcommon.Response;
@@ -47,6 +49,16 @@ public class IFibServiceImpl extends IFibService.Stub {
 		long time = System.currentTimeMillis() - start;
 
 		return new Response(result, time);
+	}
+
+	@Override
+	public void asyncFib(Request request, IFibListener listener)
+			throws RemoteException {
+		// Could take a while...
+		Response response = fib(request);
+		
+		// Call back the client when done
+		listener.onResponse(response);
 	}
 
 }

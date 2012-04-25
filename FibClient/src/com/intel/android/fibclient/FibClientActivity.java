@@ -6,13 +6,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.intel.android.fibcommon.IFibListener;
 import com.intel.android.fibcommon.IFibService;
 import com.intel.android.fibcommon.Request;
 import com.intel.android.fibcommon.Response;
@@ -32,13 +35,30 @@ public class FibClientActivity extends Activity {
 		setContentView(R.layout.main);
 		input = (EditText) findViewById(R.id.input);
 		output = (TextView) findViewById(R.id.output);
+		
+		Log.d(TAG, "onCreated");
+	}
+	
 
+	FibServiceConnection conn;
+	
+	@Override
+	protected void onStart() {
+		super.onStart();
+		conn = new FibServiceConnection();
 		// Bind to the service
 		boolean isBound = bindService(new Intent("com.intel.android.fibcommon.IFibService"),
-				new FibServiceConnection(), Context.BIND_AUTO_CREATE);
-		
-		Log.d(TAG, "onCreated isBound: "+isBound);
+				conn, Context.BIND_AUTO_CREATE);
 	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		unbindService(conn);
+		conn = null;
+	}
+
+
 
 	class FibServiceConnection implements ServiceConnection {
 		@Override
@@ -84,4 +104,41 @@ public class FibClientActivity extends Activity {
 		output.append("\nNative I: " + response.toString());
 
 	}
+	
+	/** Called to async process Java recursive call. */
+	public void onClickAsync(View v) throws RemoteException {
+		long n = Long.parseLong(input.getText().toString());
+		
+		Request request;
+		if(v.getId()==R.id.button_java)
+			request = new Request(Request.ALGORITHM_JAVA_REQURSIVE, n);
+		else 
+			request = new Request(Request.ALGORITHM_NATIVE_REQURSIVE, n);
+		
+		fibService.asyncFib(request, listener);
+		this.finish();
+	}
+
+	private static int MESSAGE_ID=47;
+	// Created on UI thread
+	private Handler handler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {	
+			if(msg.what==MESSAGE_ID) {
+				Response response = (Response)msg.obj;
+				output.append("\nAsync R: "+response.toString());
+			}
+		}
+		
+	};
+
+	/** Called back from the service when the result is ready. */
+	private IFibListener listener = new IFibListener.Stub() {		
+		@Override
+		public void onResponse(Response response) throws RemoteException {
+			Log.d("LogClient", response.toString());
+			Message msg = handler.obtainMessage(MESSAGE_ID, response);
+			handler.sendMessage(msg);
+		}
+	}; 
 }
