@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.intel.android.fibcommon.IFibService;
+import com.intel.android.fibcommon.Request;
+import com.intel.android.fibcommon.Response;
 
 public class FibClientActivity extends Activity {
 	public static final String TAG = "FibClientActivity";
@@ -58,31 +60,28 @@ public class FibClientActivity extends Activity {
 	public void onClick(View v) throws RemoteException {
 		long n = Long.parseLong(input.getText().toString());
 
+		Response response;
+		Request request = new Request(1,n);
+		
 		// Java version
-		long start = System.currentTimeMillis();
-		long resultJ = fibService.fibJ(n);
-		long timeJ = System.currentTimeMillis() - start;
-		output.append(String.format("\nfibJ(%d)=%d (%d ms)", n, resultJ, timeJ));
+		request.setAlgorithm(1);
+		response = fibService.fib(request);
+		output.append("\nJava R: " + response.toString());
 
 		// Native version
-		start = System.currentTimeMillis();
-		long resultN = fibService.fibN(n);
-		long timeN = System.currentTimeMillis() - start;
-		output.append(String.format("\nfibN(%d)=%d (%d ms)", n, resultN, timeN));
+		request.setAlgorithm(2);
+		response = fibService.fib(request);
+		output.append("\nNative R: " + response.toString());
 
 		// Java iterative version
-		start = System.nanoTime();
-		long resultJI = fibService.fibJI(n);
-		long timeJI = System.nanoTime() - start;
-		output.append(String.format("\nfibJI(%d)=%d (%d ns)", n, resultJI,
-				timeJI));
+		request.setAlgorithm(3);
+		response = fibService.fib(request);
+		output.append("\nJava I: " + response.toString());
 
 		// Native iterative version
-		start = System.nanoTime();
-		long resultNI = fibService.fibNI(n);
-		long timeNI = System.nanoTime() - start;
-		output.append(String.format("\nfibNI(%d)=%d (%d ns)", n, resultNI,
-				timeNI));
+		request.setAlgorithm(4);
+		response = fibService.fib(request);
+		output.append("\nNative I: " + response.toString());
 
 	}
 }
