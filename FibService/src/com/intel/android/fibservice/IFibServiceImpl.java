@@ -29,19 +29,23 @@ public class IFibServiceImpl extends IFibService.Stub {
 
 	@Override
 	public Response fib(Request request) throws RemoteException {
-		long result=-1;
+		long result = -1;
 		long n = request.getN();
 		long start = System.currentTimeMillis();
-		
-		switch(request.getAlgorithm()) {
-		case 1: result = FibLib.fibJ(n);
-		case 2: result = FibLib.fibJI(n);
-		case 3: result = FibLib.fibN(n);
-		case 4: result = FibLib.fibNI(n);
+
+		switch (request.getAlgorithm()) {
+		case Request.ALGORITHM_JAVA_REQURSIVE:
+			result = FibLib.fibJ(n);
+		case Request.ALGORITHM_JAVA_ITERATIVE:
+			result = FibLib.fibJI(n);
+		case Request.ALGORITHM_NATIVE_REQURSIVE:
+			result = FibLib.fibN(n);
+		case Request.ALGORITHM_NATIVE_ITERATIVE:
+			result = FibLib.fibNI(n);
 		}
-		
+
 		long time = System.currentTimeMillis() - start;
-		
+
 		return new Response(result, time);
 	}
 

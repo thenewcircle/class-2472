@@ -61,25 +61,25 @@ public class FibClientActivity extends Activity {
 		long n = Long.parseLong(input.getText().toString());
 
 		Response response;
-		Request request = new Request(1,n);
+		Request request = new Request(-1,n);
 		
 		// Java version
-		request.setAlgorithm(1);
+		request.setAlgorithm(Request.ALGORITHM_JAVA_REQURSIVE);
 		response = fibService.fib(request);
 		output.append("\nJava R: " + response.toString());
 
 		// Native version
-		request.setAlgorithm(2);
+		request.setAlgorithm(Request.ALGORITHM_JAVA_ITERATIVE);
 		response = fibService.fib(request);
 		output.append("\nNative R: " + response.toString());
 
 		// Java iterative version
-		request.setAlgorithm(3);
+		request.setAlgorithm(Request.ALGORITHM_NATIVE_REQURSIVE);
 		response = fibService.fib(request);
 		output.append("\nJava I: " + response.toString());
 
 		// Native iterative version
-		request.setAlgorithm(4);
+		request.setAlgorithm(Request.ALGORITHM_NATIVE_ITERATIVE);
 		response = fibService.fib(request);
 		output.append("\nNative I: " + response.toString());
 
